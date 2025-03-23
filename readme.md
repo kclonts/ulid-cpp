@@ -65,5 +65,5 @@ int main() {
 ```
 ## Credits
 
-Initial Library by Suyesh https://github.com/suyash/ulid
+Initial Library by Suyash https://github.com/suyash/ulid
 Fix made to use milliseconds correctly by ChrisBove https://github.com/ChrisBove/ulid
