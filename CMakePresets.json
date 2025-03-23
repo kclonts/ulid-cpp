@@ -1,0 +1,123 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "20",
+        "CMAKE_CXX_STANDARD_REQUIRED": "ON",
+        "CMAKE_CXX_EXTENSIONS": "OFF",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "debug-base",
+      "hidden": true,
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release-base",
+      "hidden": true,
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug",
+      "description": "Debug build without tests",
+      "inherits": "debug-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "OFF",
+        "ULID_ENABLE_OPENSSL": "ON"
+      }
+    },
+    {
+      "name": "debug-with-tests",
+      "displayName": "Debug with Tests",
+      "description": "Debug build with tests enabled",
+      "inherits": "debug-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON",
+        "ENABLE_COVERAGE": "ON"
+      }
+    },
+    {
+      "name": "release",
+      "displayName": "Release",
+      "description": "Release build without tests",
+      "inherits": "release-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "OFF",
+        "ULID_ENABLE_OPENSSL": "ON"
+      }
+    },
+    {
+      "name": "release-with-tests",
+      "displayName": "Release with Tests",
+      "description": "Release build with tests enabled",
+      "inherits": "release-base",
+      "cacheVariables": {
+        "BUILD_TESTING": "ON"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "debug-with-tests",
+      "configurePreset": "debug-with-tests"
+    },
+    {
+      "name": "release",
+      "configurePreset": "release"
+    },
+    {
+      "name": "release-with-tests",
+      "configurePreset": "release-with-tests"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "debug-tests",
+      "description": "Run tests from debug build",
+      "configurePreset": "debug-with-tests",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    },
+    {
+      "name": "release-tests",
+      "description": "Run tests from release build",
+      "configurePreset": "release-with-tests",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "default"
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": false
+      }
+    }
+  ]
+}
